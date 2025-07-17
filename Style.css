@@ -1,0 +1,287 @@
+/* Estilos Gerais e Reset Básico */
+body, h1, p, dl, dt, dd, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; /* Fonte padrão, legível */
+}
+
+body {
+    background-color: #222; /* Fundo escuro */
+    color: #eee; /* Texto claro */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha no topo para permitir rolagem se necessário */
+    min-height: 100vh; /* Altura mínima de 100% da viewport */
+    padding: 15px;
+}
+
+/* Container Principal do Jogo */
+.game-container {
+    background-color: #333; /* Fundo do container */
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 650px; /* Largura máxima um pouco maior */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra suave */
+}
+
+/* Títulos */
+h1 {
+    color: #ffd700; /* Cor dourada para o título principal */
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 2em;
+}
+
+h2 {
+    color: #aaa; /* Cor para subtítulos de seção */
+    border-bottom: 1px solid #444; /* Linha divisória */
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+p {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Status do Jogador */
+.game-status dl {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Coluna para label, coluna para valor */
+    gap: 5px 10px; /* Espaçamento entre itens */
+    margin-bottom: 15px;
+    font-size: 0.95em;
+    text-align: left;
+}
+.game-status dt {
+    font-weight: bold;
+    color: #ccc;
+}
+.game-status dd {
+    margin-left: 0;
+    color: #fff;
+}
+#currentLocation, #currentTheme {
+    background-color: #444;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #aaffaa; /* Verde claro para a localização e tema */
+}
+
+/* Inventário e Equipamento */
+.player-inventory {
+    margin-top: 20px;
+}
+
+.inventory-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 50px; /* Garante espaço mesmo sem itens */
+}
+
+.inventory-item-button {
+    background-color: #666;
+    color: #fff;
+    border: 1px solid #888;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    white-space: nowrap; /* Impede que o nome do item quebre linha dentro do botão */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona reticências se o texto for muito longo */
+    max-width: 120px; /* Limita a largura do botão do item */
+}
+
+.inventory-item-button:hover {
+    background-color: #777;
+    border-color: #aaa;
+}
+
+.inventory-item-button:disabled {
+    background-color: #444;
+    border-color: #666;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.player-inventory dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 10px;
+    margin-top: 15px;
+    font-size: 0.95em;
+    text-align: left;
+}
+.player-inventory dt {
+    font-weight: bold;
+    color: #ccc;
+}
+.player-inventory dd {
+    margin-left: 0;
+    color: #fff;
+}
+
+
+/* Controles de Movimento */
+.movement-buttons {
+    display: grid;
+    /* Define as áreas para os botões de movimento (Norte, Sul, Leste, Oeste) */
+    grid-template-areas:
+        ". north ."
+        "west . east"
+        ". south .";
+    gap: 10px; /* Espaçamento entre os botões */
+    width: 200px; /* Largura fixa para o pad de movimento */
+    height: 200px; /* Altura fixa para o pad de movimento */
+    margin: 20px auto; /* Centraliza o pad */
+}
+
+.movement-buttons button {
+    background-color: #555;
+    color: #fff;
+    border: 2px solid #777;
+    border-radius: 8px;
+    font-size: 0.9em;
+    padding: 10px 5px; /* Ajusta o padding para acomodar o texto contextual */
+    min-height: 50px; /* Garante um bom tamanho de toque */
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex; /* Permite empilhar texto e indicador de direção */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: normal; /* Permite que o texto quebre linha */
+}
+
+.movement-buttons button:hover {
+    background-color: #666;
+    border-color: #999;
+}
+
+.movement-buttons button:disabled {
+    background-color: #444;
+    border-color: #666;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Posicionamento dos botões na grade */
+#moveNorth { grid-area: north; }
+#moveSouth { grid-area: south; }
+#moveEast { grid-area: east; }
+#moveWest { grid-area: west; }
+
+/* Registro de Eventos (Game Log) */
+.game-log {
+    margin-top: 20px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 15px;
+    max-height: 180px; /* Limita a altura do log */
+    overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo exceder */
+    color: #e0e0e0;
+}
+.game-log p {
+    margin-bottom: 5px;
+    font-size: 0.85em;
+}
+.game-log p:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilos para diferentes tipos de mensagens no log */
+.log-message.info { color: #88ddff; } /* Azul claro */
+.log-message.combat { color: #ff8888; } /* Vermelho claro para combate */
+.log-message.gold { color: #ffd700; } /* Dourado para ouro */
+.log-message.level-up { color: #aaffaa; font-weight: bold; } /* Verde claro para nível */
+.log-message.error { color: #ff0000; font-weight: bold; } /* Vermelho para erros */
+.log-message.game-over { color: #ff0000; font-weight: bold; font-size: 1.1em; } /* Game Over */
+.log-message.win { color: #00ff00; font-weight: bold; font-size: 1.1em; } /* Vitória */
+.log-message.item { color: #cc88ff; } /* Roxo para itens */
+.log-message.event { color: #ffcc88; } /* Laranja claro para eventos */
+.log-message.merchant { color: #88ffee; } /* Ciano para comerciante */
+
+
+/* Botões de Ação (ex: Reiniciar Jogo) */
+.action-button {
+    background-color: #4CAF50; /* Verde padrão */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Centraliza o botão */
+}
+
+.action-button:hover {
+    background-color: #45a049;
+}
+
+.reset-button {
+    background-color: #f44336; /* Vermelho para reset */
+}
+.reset-button:hover {
+    background-color: #da190b;
+}
+
+/* Classe para elementos visivelmente ocultos, mas acessíveis a leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Media Queries para telas maiores (tablets e desktops) */
+@media (min-width: 768px) {
+    .game-container {
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .game-status dl {
+        font-size: 1em;
+    }
+
+    .movement-buttons {
+        width: 250px;
+        height: 250px;
+    }
+
+    .movement-buttons button {
+        font-size: 1em;
+        padding: 15px 10px;
+    }
+}
