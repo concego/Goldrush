@@ -5,12 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const START_HEALTH = 100;
     const START_ATTACK = 10;
     const START_DEFENSE = 0;
-    const INITIAL_DEBT = 100;
+    // Não definir INITIAL_DEBT fixo aqui!
+
     const GOLD_DROP_CHANCE_MOVE = 0.1;
     const GOLD_STOLEN_PERCENT_COMBAT = 0.05;
 
-    // Temas, monstros e itens
+    // Temas, monstros e itens (igual ao original)
     const Themes = {
+        // ... (sem alterações)
         'Mina Abandonada': {
             description: "Uma antiga mina cheia de veias de ouro, mas também perigos ocultos.",
             monsters: [
@@ -34,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Itens do jogo
     const Items = {
+        // ... (igual ao original)
         HEALTH_POTION: { id: 'HEALTH_POTION', name: "Poção de Vida", type: "consumable", value: 30, description: "Restaura 30 de vida." },
         ATTACK_POTION: { id: 'ATTACK_POTION', name: "Poção de Ataque", type: "consumable", value: 5, description: "Aumenta seu ataque em 5 permanentemente." },
         DEFENSE_POTION: { id: 'DEFENSE_POTION', name: "Poção de Defesa", type: "consumable", value: 3, description: "Aumenta sua defesa em 3 permanentemente." },
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const equippedWeaponEl = document.getElementById('equippedWeapon');
     const equippedArmorEl = document.getElementById('equippedArmor');
 
-    // Web Audio API Setup
+    // Web Audio API Setup (igual ao original)
     let audioContext;
     let masterGain;
 
@@ -129,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fountain: () => playTone(800, 0.2, 0.3, 'triangle')
     };
 
-    // Classes e Lógica do Jogo
+    // Classes e lógica do jogo
     class Monster {
         constructor(name, health, attack, goldDrop, stealPercent) {
             this.name = name;
@@ -141,19 +143,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initializeGame() {
+        // Inicialize áudio se necessário
+        initAudio();
+
         // Escolhe um tema aleatório
         const themeKeys = Object.keys(Themes);
         currentThemeName = themeKeys[Math.floor(Math.random() * themeKeys.length)];
         const theme = Themes[currentThemeName];
         currentMonsters = theme.monsters;
 
+        // Definir dívida e ouro inicial de forma aleatória e coerente
+        const initialDebt = Math.floor(Math.random() * 91) + 10; // 10 a 100
+        const initialGold = initialDebt + Math.floor(Math.random() * 101); // entre dívida e dívida+100
+
         player = {
             x: 0,
             y: 0,
             health: START_HEALTH,
             maxHealth: START_HEALTH,
-            gold: INITIAL_DEBT,
-            debt: INITIAL_DEBT,
+            gold: initialGold,
+            debt: initialDebt,
             level: 1,
             attack: START_ATTACK,
             defense: START_DEFENSE,
@@ -168,4 +177,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         generateMap();
         updateUI();
-        logMessage(`Bem-vindo ao Gold Rush! Você está na ${currentThemeName
+        logMessage(`Bem-vindo ao Gold Rush! Você está na ${currentThemeName}.`);
+    }
+
+    // Adicione os listeners dos botões (evita bugs por HTML incompleto)
+    moveNorthBtn && moveNorthBtn.addEventListener('click', () => movePlayer('north'));
+    moveSouthBtn && moveSouthBtn.addEventListener('click', () => movePlayer('south'));
+    moveEastBtn && moveEastBtn.addEventListener('click', () => movePlayer('east'));
+    moveWestBtn && moveWestBtn.addEventListener('click', () => movePlayer('west'));
+    resetButton && resetButton.addEventListener('click', initializeGame);
+
+    // O resto do seu código original permanece, incluindo as funções de movimentação, combate, UI, etc.
+    // ...
+});
