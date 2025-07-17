@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Rush: A Dívida da Masmorra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-container">
+        <h1>Gold Rush</h1>
+        <p class="game-description">Você tem uma dívida de ouro e precisa sair da masmorra com ela!</p>
+
+        <section class="game-status" aria-label="Status do Jogador e Dívida">
+            <h2>Status do Jogador</h2>
+            <dl>
+                <dt>Vida:</dt><dd id="playerHealth">100</dd>
+                <dt>Ouro:</dt><dd id="playerGold">0</dd>
+                <dt>Dívida:</dt><dd id="playerDebt">0</dd>
+                <dt>Nível:</dt><dd id="playerLevel">1</dd>
+                <dt>Ataque:</dt><dd id="playerAttack">10</dd>
+                <dt>Defesa:</dt><dd id="playerDefense">0</dd>
+            </dl>
+            <p id="currentLocation" aria-live="polite">Localização: (X, Y)</p>
+            <p id="currentTheme" aria-live="polite">Tema: Carregando...</p>
+        </section>
+
+        <section class="player-inventory" aria-label="Inventário e Equipamento">
+            <h2>Inventário</h2>
+            <div id="inventoryItems" class="inventory-grid">
+                </div>
+
+            <h2>Equipamento</h2>
+            <dl>
+                <dt>Arma:</dt><dd id="equippedWeapon">- Nenhum -</dd>
+                <dt>Armadura:</dt><dd id="equippedArmor">- Nenhuma -</dd>
+            </dl>
+        </section>
+
+        <section class="game-controls" aria-label="Controles de Movimento">
+            <h2>Movimento</h2>
+            <div class="movement-buttons">
+                <button id="moveNorth" data-direction="north" aria-label="Mover para o Norte"></button>
+                <button id="moveWest" data-direction="west" aria-label="Mover para o Oeste"></button>
+                <button id="moveEast" data-direction="east" aria-label="Mover para o Leste"></button>
+                <button id="moveSouth" data-direction="south" aria-label="Mover para o Sul"></button>
+            </div>
+            <div id="directionInfo" aria-live="polite" class="sr-only"></div>
+        </section>
+
+        <section class="game-log" aria-label="Registro de Eventos do Jogo">
+            <h2>Registro de Eventos</h2>
+            <div id="gameLog" aria-live="polite">
+                <p>Bem-vindo ao Gold Rush! Encontre a saída para vencer.</p>
+            </div>
+        </section>
+
+        <button id="resetGame" class="action-button reset-button" aria-label="Reiniciar o Jogo">Reiniciar Jogo</button>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
